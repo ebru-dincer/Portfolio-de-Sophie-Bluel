@@ -85,7 +85,13 @@ nav li {
 	font-size: 1.2em;
 }
 
-li:hover {
+li a {
+	text-decoration: none;
+	color: black;
+}
+
+
+li a:hover {
 	color: #B1663C;
 }
 
@@ -104,10 +110,19 @@ h2{
     margin-bottom: 50px;
 }
 
-.info-login p {
-    text-align: start;
-   position: relative;
-   left : 380px
+.info-login label {
+	display: flex;
+	flex-direction: column;
+}
+
+.position-email {
+	position: relative;
+	right : 169px
+}
+
+.position-password {
+	position: relative;
+	right : 145px
 }
 
 .info-login input {
@@ -130,15 +145,25 @@ h2{
     border-radius: 60px;
     background: #1D6154;
     border-style: none;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
+	cursor: pointer;
 }
 
-.mdp {
+.error {
+	color: red;
+    font-family: Work Sans;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.password-forgotten {
     color: #3D3D3D;
     font-family: Work Sans;
     font-size: 14px;
     font-weight: 500;
     text-decoration-line: underline;
+	cursor: pointer;
+	margin-top: 20px;
 }
 
 
