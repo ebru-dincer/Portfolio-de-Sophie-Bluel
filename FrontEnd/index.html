@@ -47,8 +47,19 @@
 		<h2>Mes Projets</h2>
 		<div class="edit-project display-none">
 			<i class="fa-solid fa-pen-to-square fa-black"></i>
-			<p>modifier</p>
+			<a href="#modal1" class="js-modal"><p>modifier</p></a>
 		</div>
+
+		<aside id="modal1" class="display-none" aria-hidden="true" role="dialog">
+			<div class="modal-wrapper js-modal-stop">
+				<div class="js-modal-close"><i class="fa-solid fa-xmark"></i></div>
+				<h3>Galerie photo</h3>
+				<div class="modal-gallery"></div>
+			</div>
+			<hr/>
+			<div class="modal-btn">Ajouter une photo</div>
+		</aside>
+
 		<div class="filters"> 
 		</div>
 		<div class="gallery">
