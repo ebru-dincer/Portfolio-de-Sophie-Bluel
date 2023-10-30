@@ -32,3 +32,22 @@ async function logIn (email, password) {
 }
 
 
+async function deleteWorks (id) {
+  console.log("deleteWorks")
+  let token = localStorage.getItem("token");
+
+  try {
+    console.log(apiUrl + "/works/" + id)    
+    const response = await fetch(apiUrl + "/works/" + id, {
+                  method: "DELETE",
+                  headers: {"Authorization": `Bearer ${token}`},
+              });
+
+    console.log(response);    
+   return response;
+  
+  } catch (erreur) {
+    console.error("Erreur :", erreur);
+  }
+}
+
