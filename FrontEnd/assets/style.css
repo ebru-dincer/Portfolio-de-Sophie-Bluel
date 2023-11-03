@@ -94,6 +94,8 @@ table {
 	color: black;
 }
 
+/* MODALE */
+
 .modal {
 	position: fixed;
 	display: flex;
@@ -181,7 +183,154 @@ hr {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	cursor: pointer;
 }
+
+/* FORMULAIRE */
+
+.js-fmodal-close {
+	text-align: end;
+	font-size: 20px;
+}
+
+.form-wrapper {
+	overflow: auto;
+	background-color: white;
+	width: 630px;
+	height: 688px;
+	max-width: calc(100vw - 20px);
+	max-height: calc(100vh - 20px);
+	padding: 0 30px;
+	box-sizing: border-box;
+	border-radius: 10px;
+}
+/* à ajouter sur la modale pour visibilité*/
+.form_modal {  
+	position: fixed;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.8);
+}
+
+.fa-arrow-left {
+	font-size: 20px;
+	position: relative;
+	top: 20px;
+}
+
+.form-preview {
+	width: 420px;
+	height: 169px;
+	margin: 30px 70px; 
+	border-radius: 3px;
+	gap: 10px;
+	background: #E8F1F6;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.fa-image{
+	font-size: 76px; 
+	color : #B9C5CC;
+}
+
+.custom-file-upload {
+	width: 173px;
+	height: 36px;
+	border-radius: 50px;
+	background: #CBD6DC;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	color: #306685;
+	text-align: center;
+	font-family: Work Sans;
+	font-size: 14px;
+	font-weight: 500;
+	cursor: pointer;
+}
+
+#file-upload {
+	position: relative;
+	z-index: -1;
+	margin-top: -30px;
+}
+
+.form-preview p {
+	color: #444;
+	text-align: center;
+	font-family: Work Sans;
+	font-size: 10px;
+	font-weight: 400;
+}
+
+#form-modal form {
+	text-align: left;
+	margin-top: 30px;
+	display: flex;
+	flex-direction: column;
+	margin: 0 70px;
+}
+
+form input[type="text"], select {
+	width: 420px;
+	height: 51px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	margin-bottom: 20px;
+
+}
+
+form label {
+	margin-bottom: 10px;
+	color: #3D3D3D;
+	font-family: Work Sans;
+	font-size: 14px;
+	font-weight: 500;
+}
+
+form input[type="submit"] {
+	width: 237px;
+	height: 36px;
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	width: 180px;
+	text-align: center;
+	border-radius: 60px;
+	margin: 20px 110px;
+	border-style: none;
+}
+
+
+.btn-disabled {
+	background-color: #A7A7A7;
+}
+
+.btn-abled {
+	background-color: #1D6154;
+}
+
+.form-preview img {
+	position: absolute;
+}
+
+.preview-img-disabled {
+	z-index: -1;
+}
+
+
+
+/* MAIN */
 
 .main-container {
 	max-width: 1140px;
@@ -336,7 +485,7 @@ margin: auto;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-input[type="submit"]{
+#contact input[type="submit"]{
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;

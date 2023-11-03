@@ -51,3 +51,24 @@ async function deleteWorks (id) {
   }
 }
 
+
+async function sendWorks (formData) {
+
+  let token = localStorage.getItem("token");
+
+  try {
+  const response = await fetch(apiUrl + "/works", {
+                  method: "POST",
+                  headers: {"Authorization": `Bearer ${token}`},
+                  body: formData,
+                });
+  console.log(response)
+  const sendRequest = await response.json();
+  console.log("Réussite :", sendRequest);
+  return sendRequest;
+  
+} catch (erreur) {
+  console.error("Erreur :", erreur);
+}
+}
+

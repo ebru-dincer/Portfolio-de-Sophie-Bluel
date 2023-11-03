@@ -60,6 +60,41 @@
 			<div class="modal-btn">Ajouter une photo</div>
 		</aside>
 
+		<aside id="form-modal" class="display-none" aria-hidden="true" role="dialog">
+			<div class="form-wrapper js-fmodal-stop">
+				<div class="js-fmodal-return"><i class="fa-solid fa-arrow-left"></i></div>
+				<div class="js-fmodal-close"><i class="fa-solid fa-xmark"></i></div>
+				<h3>Ajout photo</h3>
+				<div class="form-preview">
+					<div><i class="fa-regular fa-image"></i></div>
+					<img src="" alt="Aperçu" class="preview-field preview-img-disabled" />
+					<label class="custom-file-upload" for="file-upload">+ Ajouter photo</label>
+					<input type="file" id="file-upload" name="file-upload" accept=".jpg, .jpeg, .png"  >
+					<p>jpg, png : 4mo max</p>
+				</div>
+				<form action="#" method="post" id="form-element">
+					
+					<label for="title">Titre</label>
+					<input type="text" name="title" id="title">
+
+					<label for="category">Catégorie</label>
+					<select name="category" id="category-select">
+  						<option value=""></option>
+  						<option value="1">Objets</option>
+  						<option value="2">Appartements</option>
+  						<option value="3">Hôtels & restaurants</option>
+					</select>
+
+					<hr/>
+					<input type="submit" value="Valider" class="btn-disabled" disabled>
+				
+				</form>
+			</div>
+		</aside>
+
+
+
+
 		<div class="filters"> 
 		</div>
 		<div class="gallery">
