@@ -196,11 +196,15 @@ function editHomepage() {
 
             
             // Aperçu Image 
-            const fileInput = document.getElementById("file-upload")
+            const fileInput = document.getElementById("file-upload");
 
             fileInput.addEventListener("change", async () => {
                 const selectedPicture = document.querySelector("input[type=file]").files[0];
                 console.log(selectedPicture);
+
+                const title = document.getElementById("title").value;
+                const category = document.getElementById("category-select");
+                const categoryValue = category.options[category.selectedIndex].value;
 
                 const preview = document.querySelector(".preview-field")
                 const reader = new FileReader();
@@ -224,11 +228,30 @@ function editHomepage() {
                   btnPreview.classList.add("btn-abled");
                   btnPreview.disabled = false;
                 }
+
               }
             );
             
+
+            //Affichage des travaux dans Gallery
             const formElement = document.getElementById("form-element");
-            formElement.addEventListener("submit", addNewWork)
+            const selectedPicture = document.querySelector("input[type=file]").files[0];
+            const title = document.getElementById("title").value;
+            const category = document.getElementById("category-select");
+            const categoryValue = category.options[category.selectedIndex].value;
+
+            formElement.addEventListener("submit", (e) => {
+                e.preventDefault();
+                console.log("clic sur valider")
+
+                // Message d'erreur si champs vides
+                if ((selectedPicture === null) || (title === "") || (categoryValue === "")) {   
+                    alert("Veuillez remplir tous les champs.");
+                    return false;
+                  } else {
+                    addNewWork(e);
+                  }
+            });
            
             async function addNewWork(e) {
                 e.preventDefault();
@@ -253,6 +276,7 @@ function editHomepage() {
             };
 
         };
+
 
         //Ouverture du FORMULAIRE 
         document.querySelector(".modal-btn").addEventListener("click", openFormModal)
