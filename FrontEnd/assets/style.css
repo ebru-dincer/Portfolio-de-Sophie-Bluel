@@ -137,27 +137,27 @@ h3 {
 .modal-gallery {
 	display: flex;
 	flex-wrap: wrap;
-	margin : 0 40px 0 70px;
+	margin : 40px 40px 0 70px;
 	gap: 10px;
+}
+
+
+.modal-gallery-img {
+	width: 78px;
+	height: 104px;
 }
 
 .delete-button {
 	width: 18px;
-	height: 14px;
 	border-radius: 2px;
-	background-color: black;
-	text-align: center;
-	padding-top: 3px;
-	position: relative;
-	top: 23px;
-	left: 55px;
+	position: absolute;
+	margin-top: 7px;
+	margin-left: 55px;
+	cursor: pointer;
 }
 
 
-.modal-gallery img {
-	width: 78px;
-	height: 104px;
-}
+
 
 hr {
   color: #B3B3B3;
@@ -204,7 +204,7 @@ hr {
 	box-sizing: border-box;
 	border-radius: 10px;
 }
-/* à ajouter sur la modale pour visibilité*/
+
 .form_modal {  
 	position: fixed;
 	display: flex;
@@ -426,6 +426,7 @@ li a:hover {
 
 .gallery img {
 	width: 100%;
+	height: 405px;
 }
 
 .filters {

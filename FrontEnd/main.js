@@ -107,35 +107,46 @@ function editHomepage() {
 
 
             //Suppression des Travaux
-            const deleteButtons = document.querySelectorAll(".delete-button");
-            console.log(deleteButtons);
+            async function deleteEvent() { 
+                const deleteButtons = document.querySelectorAll(".delete-button");
+                console.log(deleteButtons);
         
-            deleteButtons.forEach(deleteButton => {
-                deleteButton.addEventListener("click", async (e) => {
-                    console.log("clic sur le bouton delete")
-                e.preventDefault();
-                e.stopPropagation();
-               
-                const deleteButtonId = e.target.parentNode.dataset.id;
-                    
-                const responseDelete = await deleteWorks (deleteButtonId);
-                console.log(responseDelete);
-    
-    
-                if (responseDelete.ok) {  // if HTTP-status is 200-299
+                deleteButtons.forEach(async (deleteButton) => {
 
+                    deleteButton.addEventListener("click", async (e) => {
+                    console.log("clic sur le bouton delete")
+                    e.preventDefault();
+                    e.stopPropagation();
+               
+                // console.log(e.target.parentNode)
+                    console.log(e.target.dataset.id)
+                    const deleteButtonId = e.target.dataset.id;
+                // console.log(deleteButtonId); 
+                // e.target.parentNode.remove()
+                    
+                    const responseDelete = await deleteWorks (deleteButtonId);
+                    console.log(responseDelete);
+
+                    if (responseDelete.ok) {  // if HTTP-status is 200-299
+                    deleteEvent();
                     const works = await getWorks();
                     generateModalGallery(works);
                     gallery.innerHTML = "";
-                    generateGallery(works)
+                    generateGallery(works);
 
-                } else {
+                    } else {
                     alert("Echec de suppression"); 
-                }
+                    }
+
+                    });
                 });
+                
 
-            });
+            };
+        
+            deleteEvent();
 
+            
         }
 
         const closeModal = function (e) {
@@ -165,20 +176,26 @@ function editHomepage() {
             modalGallery.innerHTML = "";
 
             for (let i = 0; i < works.length; i++) {
-                const worksElement = document.createElement("figure");
-                const imageElement = document.createElement("img");
-                const trashElement = document.createElement("div")
+                // const worksElement = document.createElement("figure");
+                // const imageElement = document.createElement("img");
+                // const trashElement = document.createElement("div")
                 
-                trashElement.classList.add("delete-button");
-                trashElement.dataset.id = works[i].id;  //chercher info sur dataset
-                trashElement.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="9" height="11" viewBox="0 0 9 11" fill="none">
-                <path d="M2.71607 0.35558C2.82455 0.136607 3.04754 0 3.29063 0H5.70938C5.95246 0 6.17545 0.136607 6.28393 0.35558L6.42857 0.642857H8.35714C8.71272 0.642857 9 0.930134 9 1.28571C9 1.64129 8.71272 1.92857 8.35714 1.92857H0.642857C0.287277 1.92857 0 1.64129 0 1.28571C0 0.930134 0.287277 0.642857 0.642857 0.642857H2.57143L2.71607 0.35558ZM0.642857 2.57143H8.35714V9C8.35714 9.70915 7.78058 10.2857 7.07143 10.2857H1.92857C1.21942 10.2857 0.642857 9.70915 0.642857 9V2.57143ZM2.57143 3.85714C2.39464 3.85714 2.25 4.00179 2.25 4.17857V8.67857C2.25 8.85536 2.39464 9 2.57143 9C2.74821 9 2.89286 8.85536 2.89286 8.67857V4.17857C2.89286 4.00179 2.74821 3.85714 2.57143 3.85714ZM4.5 3.85714C4.32321 3.85714 4.17857 4.00179 4.17857 4.17857V8.67857C4.17857 8.85536 4.32321 9 4.5 9C4.67679 9 4.82143 8.85536 4.82143 8.67857V4.17857C4.82143 4.00179 4.67679 3.85714 4.5 3.85714ZM6.42857 3.85714C6.25179 3.85714 6.10714 4.00179 6.10714 4.17857V8.67857C6.10714 8.85536 6.25179 9 6.42857 9C6.60536 9 6.75 8.85536 6.75 8.67857V4.17857C6.75 4.00179 6.60536 3.85714 6.42857 3.85714Z" fill="white"/></svg>`;
+                // trashElement.classList.add("delete-button");
+                // trashElement.dataset.id = works[i].id;
+                // trashElement.innerHTML = `<img src="" `;
                 
-                imageElement.src = works[i].imageUrl;
+                // imageElement.src = works[i].imageUrl;
         
-                worksElement.appendChild(trashElement);
-                worksElement.appendChild(imageElement);
-                modalGallery.appendChild(worksElement);
+                // worksElement.appendChild(trashElement);
+                // worksElement.appendChild(imageElement);
+                // modalGallery.appendChild(worksElement);
+
+                const figure = `<figure>
+                <img class="delete-button" data-id="${works[i].id}" src="./assets/icons/trash-icon.png">
+                <img class="modal-gallery-img" src="${works[i].imageUrl}">
+                </figure>`;
+                modalGallery.innerHTML += figure;
+
             };
         }
 
@@ -202,9 +219,9 @@ function editHomepage() {
                 const selectedPicture = document.querySelector("input[type=file]").files[0];
                 console.log(selectedPicture);
 
-                const title = document.getElementById("title").value;
-                const category = document.getElementById("category-select");
-                const categoryValue = category.options[category.selectedIndex].value;
+                // const title = document.getElementById("title").value;
+                // const category = document.getElementById("category-select");
+                // const categoryValue = category.options[category.selectedIndex].value;
 
                 const preview = document.querySelector(".preview-field")
                 const reader = new FileReader();
@@ -235,20 +252,27 @@ function editHomepage() {
 
             //Affichage des travaux dans Gallery
             const formElement = document.getElementById("form-element");
-            const selectedPicture = document.querySelector("input[type=file]").files[0];
-            const title = document.getElementById("title").value;
-            const category = document.getElementById("category-select");
-            const categoryValue = category.options[category.selectedIndex].value;
 
             formElement.addEventListener("submit", (e) => {
                 e.preventDefault();
                 console.log("clic sur valider")
 
+                const selectedPicture = document.querySelector("input[type=file]").files[0];
+                const title = document.getElementById("title").value;
+                const category = document.getElementById("category-select");
+                const categoryValue = category.options[category.selectedIndex].value;
+
+
                 // Message d'erreur si champs vides
+                console.log(selectedPicture)
+                console.log(title)
+                console.log(categoryValue)
+
                 if ((selectedPicture === null) || (title === "") || (categoryValue === "")) {   
                     alert("Veuillez remplir tous les champs.");
                     return false;
                   } else {
+                    console.log("l'image est publiée")
                     addNewWork(e);
                   }
             });
@@ -257,7 +281,6 @@ function editHomepage() {
                 e.preventDefault();
 
                 const formData = new FormData(formElement);
-
                 const selectedPicture = document.querySelector("input[type=file]").files[0];
                 formData.append("image", selectedPicture);
 
@@ -268,10 +291,10 @@ function editHomepage() {
                 const responseSendWorks = await sendWorks (formData);
                 console.log(responseSendWorks);
 
-                if (responseSendWorks.ok) {
-                    works.push(responseSendWorks);
-                    generateGallery(works);
-                };
+                closeFormModal(e);
+                gallery.innerHTML = "";
+                const works = await getWorks();
+                generateGallery(works);
 
             };
 

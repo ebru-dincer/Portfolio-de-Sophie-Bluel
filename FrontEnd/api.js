@@ -33,17 +33,15 @@ async function logIn (email, password) {
 
 
 async function deleteWorks (id) {
-  console.log("deleteWorks")
+  
   let token = localStorage.getItem("token");
 
-  try {
-    console.log(apiUrl + "/works/" + id)    
+  try { 
     const response = await fetch(apiUrl + "/works/" + id, {
                   method: "DELETE",
                   headers: {"Authorization": `Bearer ${token}`},
               });
-
-    console.log(response);    
+   
    return response;
   
   } catch (erreur) {
@@ -62,7 +60,7 @@ async function sendWorks (formData) {
                   headers: {"Authorization": `Bearer ${token}`},
                   body: formData,
                 });
-  console.log(response)
+  
   const sendRequest = await response.json();
   console.log("Réussite :", sendRequest);
   return sendRequest;
