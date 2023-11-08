@@ -118,19 +118,17 @@ function editHomepage() {
                     e.preventDefault();
                     e.stopPropagation();
                
-                // console.log(e.target.parentNode)
-                    console.log(e.target.dataset.id)
+                    // console.log(e.target.dataset.id)
                     const deleteButtonId = e.target.dataset.id;
-                // console.log(deleteButtonId); 
-                // e.target.parentNode.remove()
+                    e.target.parentNode.remove()
                     
                     const responseDelete = await deleteWorks (deleteButtonId);
                     console.log(responseDelete);
 
                     if (responseDelete.ok) {  // if HTTP-status is 200-299
-                    deleteEvent();
+                    // deleteEvent();
                     const works = await getWorks();
-                    generateModalGallery(works);
+                    // generateModalGallery(works);
                     gallery.innerHTML = "";
                     generateGallery(works);
 
@@ -140,8 +138,6 @@ function editHomepage() {
 
                     });
                 });
-                
-
             };
         
             deleteEvent();
@@ -197,6 +193,8 @@ function editHomepage() {
                 modalGallery.innerHTML += figure;
 
             };
+
+            
         }
 
 
@@ -210,7 +208,6 @@ function editHomepage() {
             formModal.addEventListener("click", closeFormModal);
             formModal.querySelector(".js-fmodal-close").addEventListener("click", closeFormModal);
             formModal.querySelector(".js-fmodal-stop").addEventListener("click", stopPropagation);
-
             
             // Aperçu Image 
             const fileInput = document.getElementById("file-upload");
@@ -223,7 +220,7 @@ function editHomepage() {
                 // const category = document.getElementById("category-select");
                 // const categoryValue = category.options[category.selectedIndex].value;
 
-                const preview = document.querySelector(".preview-field")
+                const preview = document.querySelector(".preview-field");
                 const reader = new FileReader();
 
                 reader.addEventListener("load", () => {
@@ -238,8 +235,18 @@ function editHomepage() {
                   const labelInput = document.querySelector(".form-preview label");
                   labelInput.classList.add("display-none");
                   labelInput.classList.remove("custom-file-upload");
+
+                  const imageIcon = document.querySelector(".form-preview div");
+                  imageIcon.classList.add("display-none");
+                  imageIcon.classList.remove("image-icon");
+
+                  const previewInfo = document.querySelector(".form-preview p");
+                  previewInfo.classList.add("display-none");
+                  previewInfo.classList.remove("preview-info");
+
                   const imgPreview = document.querySelector(".preview-field");
-                  imgPreview.classList.remove("preview-img-disabled");
+                  imgPreview.classList.remove("display-none");
+
                   const btnPreview = document.querySelector("form input[type=submit]");
                   btnPreview.classList.remove("btn-disabled");
                   btnPreview.classList.add("btn-abled");
@@ -271,11 +278,51 @@ function editHomepage() {
                 if ((selectedPicture === null) || (title === "") || (categoryValue === "")) {   
                     alert("Veuillez remplir tous les champs.");
                     return false;
-                  } else {
-                    console.log("l'image est publiée")
+                } else {
+                    console.log("l'image est publiée");
+                    // gallery.innerHTML = "";
                     addNewWork(e);
-                  }
+                    reset();
+                    closeFormModal(e);
+                }
             });
+
+            function reset() {
+                const previewImage = document.querySelector(".preview-field");
+                let previewInput = document.querySelector("input[type=file]");
+                let title = document.getElementById("title");
+                let category = document.getElementById("category-select");
+
+                previewInput.value = "";
+                previewImage.src = "";
+                title.value = "";
+                category.selectedIndex = 0;
+
+                // console.log(previewInput)
+                // console.log(previewImage)
+
+                const labelInput = document.querySelector(".form-preview label");
+                labelInput.classList.add("custom-file-upload");
+                labelInput.classList.remove("display-none");
+                
+                const imageIcon = document.querySelector(".form-preview div");
+                imageIcon.classList.add("image-icon");
+                imageIcon.classList.remove("display-none");
+                
+                const previewInfo = document.querySelector(".form-preview p");
+                previewInfo.classList.add("preview-info");
+                previewInfo.classList.remove("display-none");
+                
+                const imgPreview = document.querySelector(".preview-field");
+                imgPreview.classList.add("display-none");
+
+                const btnPreview = document.querySelector("form input[type=submit]");
+                btnPreview.classList.remove("btn-abled");
+                btnPreview.classList.add("btn-disabled");
+                btnPreview.disabled = true;
+            }
+
+
            
             async function addNewWork(e) {
                 e.preventDefault();
@@ -291,9 +338,11 @@ function editHomepage() {
                 const responseSendWorks = await sendWorks (formData);
                 console.log(responseSendWorks);
 
-                closeFormModal(e);
+                // closeFormModal(e);
                 gallery.innerHTML = "";
+                // console.log(gallery);
                 const works = await getWorks();
+                // console.log(works);
                 generateGallery(works);
 
             };

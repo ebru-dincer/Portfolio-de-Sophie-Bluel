@@ -44,10 +44,13 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
-		<div class="edit-project display-none">
-			<i class="fa-solid fa-pen-to-square fa-black"></i>
-			<a href="#modal1" class="js-modal"><p>modifier</p></a>
+		
+		<div class="portfolio-title">
+			<h2>Mes Projets</h2>
+			<div class="edit-project display-none">
+				<i class="fa-solid fa-pen-to-square fa-black"></i>
+				<a href="#modal1" class="js-modal"><p>modifier</p></a>
+			</div>
 		</div>
 
 		<aside id="modal1" class="display-none" aria-hidden="true" role="dialog">
@@ -66,11 +69,13 @@
 				<div class="js-fmodal-close"><i class="fa-solid fa-xmark"></i></div>
 				<h3>Ajout photo</h3>
 				<div class="form-preview">
-					<div><i class="fa-regular fa-image"></i></div>
-					<img src="" alt="Aperçu" class="preview-field preview-img-disabled" />
+					<div class="image-icon"><i class="fa-regular fa-image"></i></div>
+					<!-- <img src="" alt="Aperçu" class="preview-field preview-img-disabled" /> -->
+					<img src="" alt="Aperçu" class="preview-field display-none" />
+
 					<label class="custom-file-upload" for="file-upload">+ Ajouter photo</label>
-					<input type="file" id="file-upload" name="file-upload" accept=".jpg, .jpeg, .png"  >
-					<p>jpg, png : 4mo max</p>
+					<input type="file" id="file-upload" name="file-upload" accept=".jpg, .jpeg, .png" class="preview-input" >
+					<p class="preview-info">jpg, png : 4mo max</p>
 				</div>
 				<form action="#" method="post" id="form-element">
 					
