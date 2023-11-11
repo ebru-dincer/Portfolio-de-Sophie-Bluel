@@ -58,9 +58,11 @@
 				<div class="js-modal-close"><i class="fa-solid fa-xmark"></i></div>
 				<h3>Galerie photo</h3>
 				<div class="modal-gallery"></div>
+				<div class="modal-btn-box">
+					<hr/>
+					<div class="modal-btn">Ajouter une photo</div>
+				</div>
 			</div>
-			<hr/>
-			<div class="modal-btn">Ajouter une photo</div>
 		</aside>
 
 		<aside id="form-modal" class="display-none" aria-hidden="true" role="dialog">
@@ -68,6 +70,8 @@
 				<div class="js-fmodal-return"><i class="fa-solid fa-arrow-left"></i></div>
 				<div class="js-fmodal-close"><i class="fa-solid fa-xmark"></i></div>
 				<h3>Ajout photo</h3>
+
+				<form action="#" method="post" id="form-element-preview">
 				<div class="form-preview">
 					<div class="image-icon"><i class="fa-regular fa-image"></i></div>
 					<!-- <img src="" alt="Aperçu" class="preview-field preview-img-disabled" /> -->
@@ -77,6 +81,7 @@
 					<input type="file" id="file-upload" name="file-upload" accept=".jpg, .jpeg, .png" class="preview-input" >
 					<p class="preview-info">jpg, png : 4mo max</p>
 				</div>
+				</form>
 				<form action="#" method="post" id="form-element">
 					
 					<label for="title">Titre</label>

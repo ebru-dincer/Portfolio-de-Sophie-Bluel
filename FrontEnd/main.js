@@ -201,6 +201,7 @@ function editHomepage() {
         //FORMULAIRE 
         const openFormModal = async function (e) {
             e.preventDefault();
+            closeModal(e);
             const formModal = document.getElementById("form-modal");
             formModal.classList.remove("display-none");
             formModal.classList.add("form_modal");
@@ -215,10 +216,7 @@ function editHomepage() {
             fileInput.addEventListener("change", async () => {
                 const selectedPicture = document.querySelector("input[type=file]").files[0];
                 console.log(selectedPicture);
-
-                // const title = document.getElementById("title").value;
-                // const category = document.getElementById("category-select");
-                // const categoryValue = category.options[category.selectedIndex].value;
+                
 
                 const preview = document.querySelector(".preview-field");
                 const reader = new FileReader();
@@ -247,15 +245,53 @@ function editHomepage() {
                   const imgPreview = document.querySelector(".preview-field");
                   imgPreview.classList.remove("display-none");
 
-                  const btnPreview = document.querySelector("form input[type=submit]");
-                  btnPreview.classList.remove("btn-disabled");
-                  btnPreview.classList.add("btn-abled");
-                  btnPreview.disabled = false;
+                //   const btnPreview = document.querySelector("form input[type=submit]");
+                //   btnPreview.classList.remove("btn-disabled");
+                //   btnPreview.classList.add("btn-abled");
+                //   btnPreview.disabled = false;
+
+                activateButton();
                 }
 
               }
             );
             
+
+            //Activation bouton 
+            function activateButton() {
+                const selectedPicture = document.querySelector("input[type=file]").files[0];
+                const title = document.getElementById("title");
+                const category = document.getElementById("category-select");
+                const categoryValue = category.options[category.selectedIndex].value;  
+
+
+                console.log("tentative activation bouton");
+                console.log(selectedPicture)
+                console.log(title.value)
+                console.log(categoryValue)
+
+                
+                if (selectedPicture && title.value !== "" && categoryValue !== "") { 
+                    console.log("bouton activé")
+                    const btnPreview = document.querySelector("form input[type=submit]");
+                    btnPreview.classList.remove("btn-disabled");
+                    btnPreview.classList.add("btn-abled");
+                    btnPreview.disabled = false;
+                }
+            }
+            
+            const title = document.getElementById("title");
+            const category = document.getElementById("category-select");
+            const categoryValue = category.options[category.selectedIndex].value;  
+            
+            title.addEventListener("change", activateButton); 
+            category.addEventListener("change", () => {
+                console.log(categoryValue)
+                activateButton()
+            })
+                
+            
+
 
             //Affichage des travaux dans Gallery
             const formElement = document.getElementById("form-element");
@@ -267,39 +303,49 @@ function editHomepage() {
                 const selectedPicture = document.querySelector("input[type=file]").files[0];
                 const title = document.getElementById("title").value;
                 const category = document.getElementById("category-select");
-                const categoryValue = category.options[category.selectedIndex].value;
-
+                const categoryValue = category.options[category.selectedIndex].value;            
 
                 // Message d'erreur si champs vides
                 console.log(selectedPicture)
                 console.log(title)
                 console.log(categoryValue)
 
-                if ((selectedPicture === null) || (title === "") || (categoryValue === "")) {   
+
+                if ((selectedPicture === "") || (title === "") || (categoryValue === "")) {   
                     alert("Veuillez remplir tous les champs.");
                     return false;
+                    
                 } else {
                     console.log("l'image est publiée");
-                    // gallery.innerHTML = "";
                     addNewWork(e);
                     reset();
-                    closeFormModal(e);
+                    // closeFormModal(e);
                 }
             });
 
             function reset() {
-                const previewImage = document.querySelector(".preview-field");
-                let previewInput = document.querySelector("input[type=file]");
-                let title = document.getElementById("title");
-                let category = document.getElementById("category-select");
+                // const previewImage = document.querySelector(".preview-field");
+                // let previewInput = document.querySelector("input[type=file]");
+                // let title = document.getElementById("title");
+                // let category = document.getElementById("category-select");
+                // const files = document.querySelector("input[type=file]").files;
 
-                previewInput.value = "";
-                previewImage.src = "";
-                title.value = "";
-                category.selectedIndex = 0;
+                
+                // previewInput.value = "";  
+                // previewImage.src = "";
+                // title.value = "";
+                // category.selectedIndex = 0;
+                
+                // selectedPicture.value = ""; 
+                // selectedPicture.splice(0, 1);   // TypeError: selectedPicture.splice is not a function
+            
 
-                // console.log(previewInput)
-                // console.log(previewImage)
+                const formElementPreview = document.getElementById("form-element-preview");
+                formElementPreview.reset();
+
+                const formElement = document.getElementById("form-element");
+                formElement.reset();
+                
 
                 const labelInput = document.querySelector(".form-preview label");
                 labelInput.classList.add("custom-file-upload");
