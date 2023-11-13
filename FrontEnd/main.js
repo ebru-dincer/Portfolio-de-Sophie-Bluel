@@ -4,6 +4,10 @@ const gallery = document.querySelector(".gallery");
 gallery.innerHTML = "";
 
 
+/**
+ * 
+ * @param {Object} works 
+ */
 function generateGallery(works) {
     console.log(works);
     for (let i = 0; i < works.length; i++) {
@@ -22,6 +26,10 @@ function generateGallery(works) {
 
 
 // Création du bouton Tous
+/**
+ * 
+ * @param {Object} works 
+ */
 function generateButtonAll(works) {
     const filterButtons = document.querySelector(".filters");
     const buttonAll = document.createElement("button");
@@ -39,6 +47,10 @@ function generateButtonAll(works) {
 };
 
 // Création des boutons Catégories
+/**
+ * 
+ * @param {Object} categories 
+ */
 function generateButton(categories) {
     console.log(categories)
     categories.forEach(category => {
@@ -118,7 +130,6 @@ function editHomepage() {
                     e.preventDefault();
                     e.stopPropagation();
                
-                    // console.log(e.target.dataset.id)
                     const deleteButtonId = e.target.dataset.id;
                     e.target.parentNode.remove()
                     
@@ -126,9 +137,7 @@ function editHomepage() {
                     console.log(responseDelete);
 
                     if (responseDelete.ok) {  // if HTTP-status is 200-299
-                    // deleteEvent();
                     const works = await getWorks();
-                    // generateModalGallery(works);
                     gallery.innerHTML = "";
                     generateGallery(works);
 
@@ -167,34 +176,21 @@ function editHomepage() {
 
 
         // TRAVAUX MODALE
+        /**
+         * 
+         * @param {Object} works 
+         */
         function generateModalGallery(works) {
             const modalGallery = document.querySelector(".modal-gallery");
             modalGallery.innerHTML = "";
 
             for (let i = 0; i < works.length; i++) {
-                // const worksElement = document.createElement("figure");
-                // const imageElement = document.createElement("img");
-                // const trashElement = document.createElement("div")
-                
-                // trashElement.classList.add("delete-button");
-                // trashElement.dataset.id = works[i].id;
-                // trashElement.innerHTML = `<img src="" `;
-                
-                // imageElement.src = works[i].imageUrl;
-        
-                // worksElement.appendChild(trashElement);
-                // worksElement.appendChild(imageElement);
-                // modalGallery.appendChild(worksElement);
-
                 const figure = `<figure>
                 <img class="delete-button" data-id="${works[i].id}" src="./assets/icons/trash-icon.png">
                 <img class="modal-gallery-img" src="${works[i].imageUrl}">
                 </figure>`;
                 modalGallery.innerHTML += figure;
-
             };
-
-            
         }
 
 
@@ -245,12 +241,7 @@ function editHomepage() {
                   const imgPreview = document.querySelector(".preview-field");
                   imgPreview.classList.remove("display-none");
 
-                //   const btnPreview = document.querySelector("form input[type=submit]");
-                //   btnPreview.classList.remove("btn-disabled");
-                //   btnPreview.classList.add("btn-abled");
-                //   btnPreview.disabled = false;
-
-                activateButton();
+                  activateButton();
                 }
 
               }
@@ -277,6 +268,11 @@ function editHomepage() {
                     btnPreview.classList.remove("btn-disabled");
                     btnPreview.classList.add("btn-abled");
                     btnPreview.disabled = false;
+                }  else {
+                    const btnPreview = document.querySelector("form input[type=submit]");
+                    btnPreview.classList.add("btn-disabled");
+                    btnPreview.classList.remove("btn-abled");
+                    btnPreview.disabled = true;
                 }
             }
             
@@ -298,7 +294,7 @@ function editHomepage() {
 
             formElement.addEventListener("submit", (e) => {
                 e.preventDefault();
-                console.log("clic sur valider")
+                console.log("clic sur valider");
 
                 const selectedPicture = document.querySelector("input[type=file]").files[0];
                 const title = document.getElementById("title").value;
@@ -306,9 +302,9 @@ function editHomepage() {
                 const categoryValue = category.options[category.selectedIndex].value;            
 
                 // Message d'erreur si champs vides
-                console.log(selectedPicture)
-                console.log(title)
-                console.log(categoryValue)
+                console.log(selectedPicture);
+                console.log(title);
+                console.log(categoryValue);
 
 
                 if ((selectedPicture === "") || (title === "") || (categoryValue === "")) {   
@@ -319,27 +315,11 @@ function editHomepage() {
                     console.log("l'image est publiée");
                     addNewWork(e);
                     reset();
-                    // closeFormModal(e);
                 }
             });
 
+            // Réinitialisation du formulaire
             function reset() {
-                // const previewImage = document.querySelector(".preview-field");
-                // let previewInput = document.querySelector("input[type=file]");
-                // let title = document.getElementById("title");
-                // let category = document.getElementById("category-select");
-                // const files = document.querySelector("input[type=file]").files;
-
-                
-                // previewInput.value = "";  
-                // previewImage.src = "";
-                // title.value = "";
-                // category.selectedIndex = 0;
-                
-                // selectedPicture.value = ""; 
-                // selectedPicture.splice(0, 1);   // TypeError: selectedPicture.splice is not a function
-            
-
                 const formElementPreview = document.getElementById("form-element-preview");
                 formElementPreview.reset();
 
@@ -369,7 +349,7 @@ function editHomepage() {
             }
 
 
-           
+           //Envoi nouveau projet à l'API
             async function addNewWork(e) {
                 e.preventDefault();
 
@@ -384,13 +364,9 @@ function editHomepage() {
                 const responseSendWorks = await sendWorks (formData);
                 console.log(responseSendWorks);
 
-                // closeFormModal(e);
                 gallery.innerHTML = "";
-                // console.log(gallery);
                 const works = await getWorks();
-                // console.log(works);
                 generateGallery(works);
-
             };
 
         };
@@ -426,8 +402,6 @@ function editHomepage() {
           
 
 
-
-  
 
 
 const init = async () => {

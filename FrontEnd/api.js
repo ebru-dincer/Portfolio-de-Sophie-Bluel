@@ -12,7 +12,12 @@ async function getCategories () {
     return categories;
 }
 
-
+/**
+ * 
+ * @param {string} email 
+ * @param {string} password 
+ * @returns {Object}
+ */
 async function logIn (email, password) {
 
     try {
@@ -31,7 +36,11 @@ async function logIn (email, password) {
   }
 }
 
-
+/**
+ * 
+ * @param {number} id 
+ * @returns 
+ */
 async function deleteWorks (id) {
   
   let token = localStorage.getItem("token");
@@ -49,7 +58,11 @@ async function deleteWorks (id) {
   }
 }
 
-
+/**
+ * 
+ * @param {Object} formData 
+ * @returns {Object}
+ */
 async function sendWorks (formData) {
 
   let token = localStorage.getItem("token");
