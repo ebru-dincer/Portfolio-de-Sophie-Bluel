@@ -95,6 +95,10 @@ li a:hover {
 	color: #B1663C;
 }
 
+.login-bold {
+	font-weight: 600;
+}
+
 /*** Section Log in  ***/
 
 section {
