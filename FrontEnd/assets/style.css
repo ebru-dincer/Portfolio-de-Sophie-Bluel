@@ -190,8 +190,6 @@ hr {
 	display: flex;
 	align-items: center;
 	flex-direction: column;
-	position: absolute;
-	bottom: 50px;
 	margin: 0 80px;
 }
 
