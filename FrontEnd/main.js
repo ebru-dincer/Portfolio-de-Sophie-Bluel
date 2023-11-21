@@ -1,4 +1,3 @@
-console.log("exécution du fichier main.js");
 
 const gallery = document.querySelector(".gallery");
 gallery.innerHTML = "";
@@ -9,7 +8,6 @@ gallery.innerHTML = "";
  * @param {Object} works 
  */
 function generateGallery(works) {
-    console.log(works);
     for (let i = 0; i < works.length; i++) {
         const worksElement = document.createElement("figure");
         const imageElement = document.createElement("img");
@@ -39,7 +37,6 @@ function generateButtonAll(works) {
     buttonAll.classList.add("filter_btn-selected");
 
     buttonAll.addEventListener("click", () => {
-        console.log("clic sur bouton Tous");
         gallery.innerHTML = "";
         generateGallery(works); 
     });
@@ -52,7 +49,6 @@ function generateButtonAll(works) {
  * @param {Object} categories 
  */
 function generateButton(categories) {
-    console.log(categories)
     categories.forEach(category => {
         const buttonsCategory = document.createElement("button");
         buttonsCategory.innerHTML = category.name;
@@ -62,11 +58,12 @@ function generateButton(categories) {
 
         buttonsCategory.addEventListener("click", async () => {
         const categoryName = category.name;
+
         const works = await getWorks();
         const filterWorks = works.filter(work =>  
             work.category.name === categoryName 
         );
-        console.log(filterWorks);
+    
         gallery.innerHTML = "";
         generateGallery(filterWorks);  
         });
@@ -78,7 +75,6 @@ function generateButton(categories) {
 function editHomepage() {
 
     if (localStorage.getItem("token")) {
-        console.log("token récupéré");
 
         // Mode Edition
         const editBanner = document.querySelector(".edit-banner");
@@ -121,12 +117,10 @@ function editHomepage() {
             //Suppression des Travaux
             async function deleteEvent() { 
                 const deleteButtons = document.querySelectorAll(".delete-button");
-                console.log(deleteButtons);
         
                 deleteButtons.forEach(async (deleteButton) => {
 
                     deleteButton.addEventListener("click", async (e) => {
-                    console.log("clic sur le bouton delete")
                     e.preventDefault();
                     e.stopPropagation();
                
@@ -134,7 +128,6 @@ function editHomepage() {
                     e.target.parentNode.remove()
                     
                     const responseDelete = await deleteWorks (deleteButtonId);
-                    console.log(responseDelete);
 
                     if (responseDelete.ok) {  // if HTTP-status is 200-299
                     const works = await getWorks();
@@ -194,7 +187,75 @@ function editHomepage() {
         }
 
 
-        //FORMULAIRE 
+        //FORMULAIRE
+
+        //Reinitialisation formulaire
+        function reset() {
+            const formElementPreview = document.getElementById("form-element-preview");
+            formElementPreview.reset();
+
+            const formElement = document.getElementById("form-element");
+            formElement.reset();
+            
+
+            const labelInput = document.querySelector(".form-preview label");
+            labelInput.classList.add("custom-file-upload");
+            labelInput.classList.remove("display-none");
+            
+            const imageIcon = document.querySelector(".form-preview div");
+            imageIcon.classList.add("image-icon");
+            imageIcon.classList.remove("display-none");
+            
+            const previewInfo = document.querySelector(".form-preview p");
+            previewInfo.classList.add("preview-info");
+            previewInfo.classList.remove("display-none");
+            
+            const imgPreview = document.querySelector(".preview-field");
+            imgPreview.classList.add("display-none");
+
+            const btnPreview = document.querySelector("form input[type=submit]");
+            btnPreview.classList.remove("btn-abled");
+            btnPreview.classList.add("btn-disabled");
+            btnPreview.disabled = true;
+        }
+
+        //Envoi nouveau projet à l'API
+        async function addNewWork(e) {
+            e.preventDefault();
+
+            const formElement = document.getElementById("form-element");
+            const formData = new FormData(formElement);
+            const selectedPicture = document.querySelector("input[type=file]").files[0];
+            formData.append("image", selectedPicture);
+
+            await sendWorks (formData);
+            gallery.innerHTML = "";
+            const works = await getWorks();
+            generateGallery(works);
+        };
+
+
+        //Publication du nouveau projet dans la gallery
+        function eventSubmit(e) {
+            e.preventDefault();
+
+            const selectedPicture = document.querySelector("input[type=file]").files[0];
+            const title = document.getElementById("title").value;
+            const category = document.getElementById("category-select");
+            const categoryValue = category.options[category.selectedIndex].value;            
+
+            // Message d'erreur si champs vides
+            if ((selectedPicture === "") || (title === "") || (categoryValue === "")) {   
+                alert("Veuillez remplir tous les champs.");
+                return false;
+                
+            } else {
+                addNewWork(e);
+                reset();
+            }
+        }
+        
+        //Fonctions Formulaire
         const openFormModal = async function (e) {
             e.preventDefault();
             closeModal(e);
@@ -208,12 +269,8 @@ function editHomepage() {
             
             // Aperçu Image 
             const fileInput = document.getElementById("file-upload");
-
             fileInput.addEventListener("change", async () => {
                 const selectedPicture = document.querySelector("input[type=file]").files[0];
-                console.log(selectedPicture);
-                
-
                 const preview = document.querySelector(".preview-field");
                 const reader = new FileReader();
 
@@ -255,15 +312,8 @@ function editHomepage() {
                 const category = document.getElementById("category-select");
                 const categoryValue = category.options[category.selectedIndex].value;  
 
-
-                console.log("tentative activation bouton");
-                console.log(selectedPicture)
-                console.log(title.value)
-                console.log(categoryValue)
-
                 
                 if (selectedPicture && title.value !== "" && categoryValue !== "") { 
-                    console.log("bouton activé")
                     const btnPreview = document.querySelector("form input[type=submit]");
                     btnPreview.classList.remove("btn-disabled");
                     btnPreview.classList.add("btn-abled");
@@ -278,96 +328,16 @@ function editHomepage() {
             
             const title = document.getElementById("title");
             const category = document.getElementById("category-select");
-            const categoryValue = category.options[category.selectedIndex].value;  
             
             title.addEventListener("change", activateButton); 
             category.addEventListener("change", () => {
-                console.log(categoryValue)
                 activateButton()
             })
                 
             
-
-
             //Affichage des travaux dans Gallery
             const formElement = document.getElementById("form-element");
-
-            formElement.addEventListener("submit", (e) => {
-                e.preventDefault();
-                console.log("clic sur valider");
-
-                const selectedPicture = document.querySelector("input[type=file]").files[0];
-                const title = document.getElementById("title").value;
-                const category = document.getElementById("category-select");
-                const categoryValue = category.options[category.selectedIndex].value;            
-
-                // Message d'erreur si champs vides
-                console.log(selectedPicture);
-                console.log(title);
-                console.log(categoryValue);
-
-
-                if ((selectedPicture === "") || (title === "") || (categoryValue === "")) {   
-                    alert("Veuillez remplir tous les champs.");
-                    return false;
-                    
-                } else {
-                    console.log("l'image est publiée");
-                    addNewWork(e);
-                    reset();
-                }
-            });
-
-            // Réinitialisation du formulaire
-            function reset() {
-                const formElementPreview = document.getElementById("form-element-preview");
-                formElementPreview.reset();
-
-                const formElement = document.getElementById("form-element");
-                formElement.reset();
-                
-
-                const labelInput = document.querySelector(".form-preview label");
-                labelInput.classList.add("custom-file-upload");
-                labelInput.classList.remove("display-none");
-                
-                const imageIcon = document.querySelector(".form-preview div");
-                imageIcon.classList.add("image-icon");
-                imageIcon.classList.remove("display-none");
-                
-                const previewInfo = document.querySelector(".form-preview p");
-                previewInfo.classList.add("preview-info");
-                previewInfo.classList.remove("display-none");
-                
-                const imgPreview = document.querySelector(".preview-field");
-                imgPreview.classList.add("display-none");
-
-                const btnPreview = document.querySelector("form input[type=submit]");
-                btnPreview.classList.remove("btn-abled");
-                btnPreview.classList.add("btn-disabled");
-                btnPreview.disabled = true;
-            }
-
-
-           //Envoi nouveau projet à l'API
-            async function addNewWork(e) {
-                e.preventDefault();
-
-                const formData = new FormData(formElement);
-                const selectedPicture = document.querySelector("input[type=file]").files[0];
-                formData.append("image", selectedPicture);
-
-                for (item of formData) {
-                    console.log(item[0], item[1]);
-                }
-
-                const responseSendWorks = await sendWorks (formData);
-                console.log(responseSendWorks);
-
-                gallery.innerHTML = "";
-                const works = await getWorks();
-                generateGallery(works);
-            };
+            formElement.addEventListener("submit", eventSubmit);
 
         };
 
@@ -385,7 +355,8 @@ function editHomepage() {
             formModal.removeEventListener("click", closeFormModal);
             formModal.querySelector(".js-fmodal-close").removeEventListener("click", closeFormModal);
             formModal.querySelector(".js-fmodal-stop").removeEventListener("click", stopPropagation);
-
+            const formElement = document.getElementById("form-element");
+            formElement.removeEventListener("submit", eventSubmit);
         };
 
         //Retour du FORMULAIRE
@@ -393,7 +364,6 @@ function editHomepage() {
             const formModal = document.getElementById("form-modal");
             formModal.classList.add("display-none");
             formModal.classList.remove("form_modal");
-            console.log("cloture");
             openModal(e)
         });
         
