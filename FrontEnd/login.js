@@ -15,7 +15,6 @@ async function sendLogIn() {
     const passwordValue = password.value;
     
     const responseLogIn = await logIn(emailValue, passwordValue)
-    console.log(responseLogIn);
 
     if (responseLogIn.token) {
       localStorage.setItem("token", responseLogIn.token)

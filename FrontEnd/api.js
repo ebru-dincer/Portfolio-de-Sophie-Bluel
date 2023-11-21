@@ -28,7 +28,6 @@ async function logIn (email, password) {
                 });
 
     const logInRequest = await response.json();
-    console.log("Réussite :", logInRequest);
     return logInRequest;
     
   } catch (erreur) {
@@ -75,7 +74,6 @@ async function sendWorks (formData) {
                 });
   
   const sendRequest = await response.json();
-  console.log("Réussite :", sendRequest);
   return sendRequest;
   
 } catch (erreur) {
